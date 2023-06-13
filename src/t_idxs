@@ -1,0 +1,58 @@
+[0;31mInit signature:[0m
+[0mtrimesh[0m[0;34m.[0m[0mbase[0m[0;34m.[0m[0mTrimesh[0m[0;34m([0m[0;34m[0m
+[0;34m[0m    [0mvertices[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mfaces[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mface_normals[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mvertex_normals[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mface_colors[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mvertex_colors[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mface_attributes[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mvertex_attributes[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mmetadata[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mprocess[0m[0;34m=[0m[0;32mTrue[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mvalidate[0m[0;34m=[0m[0;32mFalse[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mmerge_tex[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mmerge_norm[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0muse_embree[0m[0;34m=[0m[0;32mTrue[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0minitial_cache[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0mvisual[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m    [0;34m**[0m[0mkwargs[0m[0;34m,[0m[0;34m[0m
+[0;34m[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mDocstring:[0m     
+The `Geometry3D` object is the parent object of geometry objects
+which are three dimensional, including Trimesh, PointCloud,
+and Scene objects.
+[0;31mInit docstring:[0m
+A Trimesh object contains a triangular 3D mesh.
+
+Parameters
+------------
+vertices : (n, 3) float
+  Array of vertex locations
+faces : (m, 3) or (m, 4) int
+  Array of triangular or quad faces (triangulated on load)
+face_normals : (m, 3) float
+  Array of normal vectors corresponding to faces
+vertex_normals : (n, 3) float
+  Array of normal vectors for vertices
+metadata : dict
+  Any metadata about the mesh
+process : bool
+  if True, Nan and Inf values will be removed
+  immediately and vertices will be merged
+validate : bool
+  If True, degenerate and duplicate faces will be
+  removed immediately, and some functions will alter
+  the mesh to ensure consistent results.
+use_embree : bool
+  If True try to use pyembree raytracer.
+  If pyembree is not available it will automatically fall
+  back to a much slower rtree/numpy implementation
+initial_cache : dict
+  A way to pass things to the cache in case expensive
+  things were calculated before creating the mesh object.
+visual : ColorVisuals or TextureVisuals
+  Assigned to self.visual
+[0;31mFile:[0m           ~/venvs/dog-3.8.10/lib/python3.8/site-packages/trimesh/base.py
+[0;31mType:[0m           ABCMeta
+[0;31mSubclasses:[0m     _Primitive

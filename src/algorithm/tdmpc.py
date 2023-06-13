@@ -52,9 +52,9 @@ class TDMPC():
 	"""Implementation of TD-MPC learning + inference."""
 	def __init__(self, cfg):
 		self.cfg = cfg
-		self.device = torch.device('cuda')
+		self.device = torch.device('cpu')
 		self.std = h.linear_schedule(cfg.std_schedule, 0)
-		self.model = TOLD(cfg).cuda()
+		self.model = TOLD(cfg).cpu()
 		self.model_target = deepcopy(self.model)
 		self.optim = torch.optim.Adam(self.model.parameters(), lr=self.cfg.lr)
 		self.pi_optim = torch.optim.Adam(self.model._pi.parameters(), lr=self.cfg.lr)
@@ -73,7 +73,7 @@ class TDMPC():
 	
 	def load(self, fp):
 		"""Load a saved state dict from filepath into current agent."""
-		d = torch.load(fp)
+		d = torch.load(fp, map_location=torch.device('cpu'))
 		self.model.load_state_dict(d['model'])
 		self.model_target.load_state_dict(d['model_target'])
 
