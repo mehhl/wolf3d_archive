@@ -1,3 +1,7 @@
+""" This is a code to re-skin the original dm_control's Dog model using a custom mesh.
+    The code tries to adjust for some of the transformation Blender does to stl's it reads
+    so that it is possible to build a new mesh based on the original dog .stl file. """
+
 import numpy as np
 import pywavefront
 from stl import mesh
@@ -5,7 +9,6 @@ from scipy.spatial import cKDTree
 
 from dm_control.utils import io as resources
 from dm_control.mjcf import skin
-
 
 def read_skin(fp):
     """Reads MuJoCo's .skn file."""
