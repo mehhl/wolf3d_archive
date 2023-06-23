@@ -26,6 +26,7 @@ from dm_control import mujoco
 from dm_control.mujoco.wrapper import mjbindings
 from dm_control import composer
 from dm_control import mjcf
+from dm_env import specs
 
 import numpy as np
 import os
@@ -52,7 +53,6 @@ else:
 _HINGE_TYPE = dog._HINGE_TYPE
 enums = mjbindings.enums
 
-
 # OK
 def get_model_and_agents(*, count_seekers=1, xsize=50, ysize=50): 
     """Wrapper for adding/modifying and reading assets required by Dog-Hide."""
@@ -63,6 +63,7 @@ def get_model_and_agents(*, count_seekers=1, xsize=50, ysize=50):
                              size=[xsize, ysize, .1, 1])
     hfloor = model.worldbody.add('geom', type='hfield', 
                                  name='floor', hfield=hfield) 
+    model.visual._children[0].set_attributes(offwidth='1920', offheight='1080')
     learner = mjcf.from_path(os.path.join(_ASSET_DIR, 'dog.xml'))
     learner.model = 'learner'
     # get rid of unneeded stuff
@@ -476,8 +477,21 @@ class Hide(dog.Move):
 
     # get_reward() is as in `dog`, returns a product.
     def get_reward(self, physics):
-        return super().get_reward(physics)
+        return np.hstack([super().get_reward(physics), self.get_seeker_rewards(physics)])
 
+
+class FactorRewardEnvWrapper(control.Environment):
+    """A wrapper to give a separate reward for each Agent."""
+    def __init__(self, physics, task, time_limit, control_timestep,
+                 **environment_kwargs):
+        super().__init__(physics, task, time_limit=time_limit,
+                         control_timestep=control_timestep,
+                         **environment_kwargs)
+
+
+    def reward_spec(self):
+        return specs.Array(shape=(4,), dtype=np.float64, name='reward')
+   
        
 def hide(time_limit=_DEFAULT_TIME_LIMIT,
          random=None, 
@@ -497,15 +511,10 @@ def hide(time_limit=_DEFAULT_TIME_LIMIT,
                 count_seekers=count_seekers,
                 s_desired_speed=_S_WALK_SPEED)
     environment_kwargs = environment_kwargs or {}
-    return control.Environment(physics, task, time_limit=time_limit,
+    return FactorRewardEnvWrapper(physics, task, time_limit=time_limit,
                                control_timestep=_CONTROL_TIMESTEP,
                                **environment_kwargs)
- 
 
 
-
-
-
-
- 
-
+task = hide()
+  

@@ -69,7 +69,7 @@ class TruncatedNormal(pyd.Normal):
 		shape = self._extended_shape(sample_shape)
 		eps = _standard_normal(shape,
 							   dtype=self.loc.dtype,
-                               device=torch.device('cpu'))
+                               device=torch.device('cuda'))
 		eps *= self.scale
 		if clip is not None:
 			eps = torch.clamp(eps, -clip, clip)
@@ -159,7 +159,7 @@ class Episode(object):
 	"""Storage object for a single episode."""
 	def __init__(self, cfg, init_obs):
 		self.cfg = cfg
-		self.device = torch.device('cpu')
+		self.device = torch.device('cuda')
 		dtype = torch.float32 if cfg.modality == 'state' else torch.uint8
 		self.obs = torch.empty((cfg.episode_length+1, *init_obs.shape), dtype=dtype)
 		self.obs[0] = torch.tensor(init_obs, dtype=dtype)
@@ -196,7 +196,7 @@ class ReplayBuffer():
 	Uses prioritized experience replay by default."""
 	def __init__(self, cfg):
 		self.cfg = cfg
-		self.device = torch.device('cpu')
+		self.device = torch.device('cuda')
 		self.capacity = min(cfg.train_steps, cfg.max_buffer_size)
 		dtype = torch.float32 if cfg.modality == 'state' else torch.uint8
 		obs_shape = cfg.obs_shape if cfg.modality == 'state' else (3, *cfg.obs_shape[-2:])
@@ -219,9 +219,9 @@ class ReplayBuffer():
 		self._action[self.idx:self.idx+self.cfg.episode_length] = episode.action
 		self._reward[self.idx:self.idx+self.cfg.episode_length] = episode.reward
 		if self._full:
-			max_priority = self._priorities.max().to(torch.device('cpu')).item()
+			max_priority = self._priorities.max().to(torch.device('cuda')).item()
 		else:
-			max_priority = 1. if self.idx == 0 else self._priorities[:self.idx].max().to(torch.device('cpu')).item()
+			max_priority = 1. if self.idx == 0 else self._priorities[:self.idx].max().to(torch.device('cuda')).item()
 		mask = torch.arange(self.cfg.episode_length) >= self.cfg.episode_length-self.cfg.horizon
 		new_priorities = torch.full((self.cfg.episode_length,), max_priority)
 		new_priorities[mask] = 0
@@ -230,26 +230,26 @@ class ReplayBuffer():
 		self._full = self._full or self.idx == 0
 
 	def update_priorities(self, idxs, priorities):
-		self._priorities[idxs] = priorities.squeeze(1).to(torch.device('cpu')) + self._eps
+		self._priorities[idxs] = priorities.squeeze(1).to(torch.device('cuda')) + self._eps
 
 	def _get_obs(self, arr, idxs):
 		if self.cfg.modality == 'state':
 			return arr[idxs]
-		obs = torch.empty((self.cfg.batch_size, 3*self.cfg.frame_stack, *arr.shape[-2:]), dtype=arr.dtype, device=torch.device('cpu'))
-		obs[:, -3:] = arr[idxs].cpu()
+		obs = torch.empty((self.cfg.batch_size, 3*self.cfg.frame_stack, *arr.shape[-2:]), dtype=arr.dtype, device=torch.device('cuda'))
+		obs[:, -3:] = arr[idxs].cuda()
 		_idxs = idxs.clone()
 		mask = torch.ones_like(_idxs, dtype=torch.bool)
 		for i in range(1, self.cfg.frame_stack):
 			mask[_idxs % self.cfg.episode_length == 0] = False
 			_idxs[mask] -= 1
-			obs[:, -(i+1)*3:-i*3] = arr[_idxs].cpu()
+			obs[:, -(i+1)*3:-i*3] = arr[_idxs].cuda()
 		return obs.float()
 
 	def sample(self):
 		probs = (self._priorities if self._full else self._priorities[:self.idx]) ** self.cfg.per_alpha
 		probs /= probs.sum()
 		total = len(probs)
-		idxs = torch.from_numpy(np.random.choice(total, self.cfg.batch_size, p=probs.cpu().numpy(), replace=not self._full)).to(self.device)
+		idxs = torch.from_numpy(np.random.choice(total, self.cfg.batch_size, p=probs.cuda().numpy(), replace=not self._full)).to(self.device)
 		weights = (total * probs[idxs]) ** (-self.cfg.per_beta)
 		weights /= weights.max()
 
@@ -265,7 +265,7 @@ class ReplayBuffer():
 			reward[t] = self._reward[_idxs]
 
 		mask = (_idxs+1) % self.cfg.episode_length == 0
-		next_obs[-1, mask] = self._last_obs[_idxs[mask]//self.cfg.episode_length].cpu().float()
+		next_obs[-1, mask] = self._last_obs[_idxs[mask]//self.cfg.episode_length].cuda().float()
 		if not action.is_cuda:
 			action, reward, idxs, weights = \
 				action.cuda(), reward.cuda(), idxs.cuda(), weights.cuda()

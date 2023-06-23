@@ -630,6 +630,7 @@
                       <geom name="pupil_L" class="visible_bone" type="sphere" size="0.003 0 0" rgba="0 0 0 1" pos="0.0215 0.0275 0.01"/>
                       <geom name="iris_R" class="visible_bone" type="ellipsoid" size="0.003 0.007 0.007" rgba="0.45 0.45 0.225 0.4" pos="0.023 -0.027 0.01" euler="0 0 -20"/>
                       <geom name="pupil_R" class="visible_bone" type="sphere" size="0.003 0 0" rgba="0 0 0 1" pos="0.0215 -0.0275 0.01"/>
+                      <camera name="PoV_head" mode="fixed" pos="0.023 0 0.01" euler="0 110 0"/>
                       <geom name="skull0_collision" class="collision_primitive" type="ellipsoid" size="0.06 0.06 0.04" pos="-0.02 0 0.01" euler="0 10 0"/>
                       <geom name="skull1_collision" class="collision_primitive" type="capsule" size="0.015 0.04 0.015" pos="0.06 0 -0.01" euler="0 110 0"/>
                       <geom name="skull2_collision" class="collision_primitive" type="box" size="0.03 0.028 0.008" pos="0.02 0 -0.03"/>

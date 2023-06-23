@@ -52,9 +52,9 @@ class TDMPC():
 	"""Implementation of TD-MPC learning + inference."""
 	def __init__(self, cfg):
 		self.cfg = cfg
-		self.device = torch.device('cpu')
+		self.device = torch.device('cuda')
 		self.std = h.linear_schedule(cfg.std_schedule, 0)
-		self.model = TOLD(cfg).cpu()
+		self.model = TOLD(cfg).cuda()
 		self.model_target = deepcopy(self.model)
 		self.optim = torch.optim.Adam(self.model.parameters(), lr=self.cfg.lr)
 		self.pi_optim = torch.optim.Adam(self.model._pi.parameters(), lr=self.cfg.lr)
@@ -73,7 +73,7 @@ class TDMPC():
 	
 	def load(self, fp):
 		"""Load a saved state dict from filepath into current agent."""
-		d = torch.load(fp, map_location=torch.device('cpu'))
+		d = torch.load(fp, map_location=torch.device('cuda'))
 		self.model.load_state_dict(d['model'])
 		self.model_target.load_state_dict(d['model_target'])
 
@@ -141,7 +141,7 @@ class TDMPC():
 			mean, std = self.cfg.momentum * mean + (1 - self.cfg.momentum) * _mean, _std
 
 		# Outputs
-		score = score.squeeze(1).cpu().numpy()
+		score = score.squeeze(1).cuda().numpy()
 		actions = elite_actions[:, np.random.choice(np.arange(score.shape[0]), p=score)]
 		self._prev_mean = mean
 		mean, std = actions[0], _std[0]

@@ -1,0 +1,77 @@
+{
+    "os": "Linux-5.4.0-152-generic-x86_64-with-glibc2.29",
+    "python": "3.8.10",
+    "heartbeatAt": "2023-06-21T11:16:50.605368",
+    "startedAt": "2023-06-21T11:16:50.538583",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "temporary_train_hide.py",
+    "codePath": "src/temporary_train_hide.py",
+    "git": {
+        "remote": null,
+        "commit": "ee84211e6eec6ffd99f25f44849a35929b01e007"
+    },
+    "email": "elmehlan@gmail.com",
+    "root": "/home/elan/Life/ML/RL/Robot/tdmpc",
+    "host": "elan",
+    "username": "elan",
+    "executable": "/home/elan/venvs/dog-3.8.10/bin/python",
+    "cpu_count": 4,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 1528.3407499999998,
+        "min": 1400.0,
+        "max": 2100.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 1423.39,
+            "min": 1400.0,
+            "max": 2100.0
+        },
+        {
+            "current": 1455.752,
+            "min": 1400.0,
+            "max": 2100.0
+        },
+        {
+            "current": 1367.521,
+            "min": 1400.0,
+            "max": 2100.0
+        },
+        {
+            "current": 1398.021,
+            "min": 1400.0,
+            "max": 2100.0
+        },
+        {
+            "current": 1392.059,
+            "min": 1400.0,
+            "max": 2100.0
+        },
+        {
+            "current": 1406.139,
+            "min": 1400.0,
+            "max": 2100.0
+        },
+        {
+            "current": 2139.286,
+            "min": 1400.0,
+            "max": 2100.0
+        },
+        {
+            "current": 1644.558,
+            "min": 1400.0,
+            "max": 2100.0
+        }
+    ],
+    "disk": {
+        "total": 467.8895797729492,
+        "used": 392.93116760253906
+    },
+    "memory": {
+        "total": 6.773155212402344
+    }
+}

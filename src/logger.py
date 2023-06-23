@@ -65,9 +65,9 @@ class VideoRecorder:
 		self.enabled = self.save_dir and self._wandb and enabled
 		self.record(env)
 
-	def record(self, env):
+	def record(self, env, camera_id=0):
 		if self.enabled:
-			frame = env.render(mode='rgb_array', height=self.render_size, width=self.render_size, camera_id=0)
+			frame = env.render(mode='rgb_array', height=1080, width=1920, camera_id=camera_id)
 			self.frames.append(frame)
 
 	def save(self, step):
