@@ -1,6 +1,0 @@
-Help on cython_function_or_method in module lxml.etree:
-
-mmaakkeeeelleemmeenntt(self, _tag, attrib, nsmap, **_extra)
-    makeelement(self, _tag, attrib=None, nsmap=None, **_extra)
-    
-    Creates a new element associated with the same document.

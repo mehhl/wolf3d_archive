@@ -338,6 +338,7 @@
       <light name="light" mode="trackcom" pos="0 0 3"/>
       <camera name="y-axis" mode="trackcom" pos="0 -1.5 0.8" xyaxes="1 0 0 0 0.6 1"/>
       <camera name="x-axis" mode="trackcom" pos="2 0 0.5" xyaxes="0 1 0 -0.3 0 1"/>
+      <camera name="tpp" mode="fixed" pos="0.08 0 1" euler="0 0 0"/>
       <geom name="collision_torso" class="nonself_collision_primitive" type="ellipsoid" size="0.2 0.09 0.11" density="200.0" pos="0 0 0" euler="0 10 0"/>
       <body name="L_1" pos="-0.1235 0 0.09287">
         <geom name="L_1" class="bone" pos="0.083094 0 -0.50809" mesh="L_1"/>
@@ -630,7 +631,7 @@
                       <geom name="pupil_L" class="visible_bone" type="sphere" size="0.003 0 0" rgba="0 0 0 1" pos="0.0215 0.0275 0.01"/>
                       <geom name="iris_R" class="visible_bone" type="ellipsoid" size="0.003 0.007 0.007" rgba="0.45 0.45 0.225 0.4" pos="0.023 -0.027 0.01" euler="0 0 -20"/>
                       <geom name="pupil_R" class="visible_bone" type="sphere" size="0.003 0 0" rgba="0 0 0 1" pos="0.0215 -0.0275 0.01"/>
-                      <camera name="PoV_head" mode="fixed" pos="0.023 0 0.01" euler="0 110 0"/>
+                      <!-- <camera name="PoV_head" mode="fixed" pos="0.023 0 0.01" euler="0 110 0"/> -->
                       <geom name="skull0_collision" class="collision_primitive" type="ellipsoid" size="0.06 0.06 0.04" pos="-0.02 0 0.01" euler="0 10 0"/>
                       <geom name="skull1_collision" class="collision_primitive" type="capsule" size="0.015 0.04 0.015" pos="0.06 0 -0.01" euler="0 110 0"/>
                       <geom name="skull2_collision" class="collision_primitive" type="box" size="0.03 0.028 0.008" pos="0.02 0 -0.03"/>
@@ -847,7 +848,7 @@
     <geom name="wall_nx" type="plane" size="1 10 0.5" material="decoration" pos="10.7 0 0.7" zaxis="-1 0 1"/>
     <geom name="wall_ny" type="plane" size="10 1 0.5" material="decoration" pos="0 10.7 0.7" zaxis="0 -1 1"/>
     <camera name="ball" mode="targetbodycom" target="ball" pos="0.5 0.5 0.9"/>
-    <camera name="head" mode="targetbodycom" target="skull" pos="-0.5 -0.5 0.9"/>
+    <!-- <camera name="head" mode="targetbodycom" target="skull" pos="-0.5 -0.5 0.9"/> -->
   </worldbody>
   <contact>
     <exclude name="upper_arm_L:torso" body1="upper_arm_L" body2="torso"/>

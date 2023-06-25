@@ -141,7 +141,7 @@ class TDMPC():
 			mean, std = self.cfg.momentum * mean + (1 - self.cfg.momentum) * _mean, _std
 
 		# Outputs
-		score = score.squeeze(1).cuda().numpy()
+		score = score.squeeze(1).cpu().numpy()
 		actions = elite_actions[:, np.random.choice(np.arange(score.shape[0]), p=score)]
 		self._prev_mean = mean
 		mean, std = actions[0], _std[0]

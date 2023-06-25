@@ -1,0 +1,50 @@
+{
+    "os": "Windows-10-10.0.19045-SP0",
+    "python": "3.8.16",
+    "heartbeatAt": "2023-06-24T14:20:10.002528",
+    "startedAt": "2023-06-24T14:20:09.800255",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "temporary_train_hide.py",
+    "codePath": "src\\temporary_train_hide.py",
+    "git": {
+        "remote": "https://github.com/tetragonites/wolf3d.git",
+        "commit": "ef8fa96f6063ae51c8b50c0ebb41fb7204a92b65"
+    },
+    "email": "elmehlan@gmail.com",
+    "root": "C:/Users/biela/Desktop/xvideos/tdmpc",
+    "host": "MSI",
+    "username": "biela",
+    "executable": "C:\\Users\\biela\\.conda\\envs\\tdmpc\\python.exe",
+    "cpu_count": 6,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 2592.0,
+        "min": 0.0,
+        "max": 2592.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2592.0,
+            "min": 0.0,
+            "max": 2592.0
+        }
+    ],
+    "disk": {
+        "total": 930.4804649353027,
+        "used": 637.9194755554199
+    },
+    "gpu": "NVIDIA GeForce RTX 2070 Super with Max-Q Design",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 2070 Super with Max-Q Design",
+            "memory_total": 8589934592
+        }
+    ],
+    "memory": {
+        "total": 31.821521759033203
+    }
+}
